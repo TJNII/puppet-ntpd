@@ -1,4 +1,9 @@
-class ntp {
+class ntp (
+  $ntp_servers = [ "0.pool.ntp.org",
+   		   "1.pool.ntp.org",
+                   "2.pool.ntp.org",
+                   "3.pool.ntp.org", ]
+  ) {
    case $operatingsystem {
       centos, redhat: { 
          $service_name = 'ntpd'
@@ -7,9 +12,6 @@ class ntp {
          $service_name = 'ntp'
       }
    }
-
-   $ntp_servers = [ "ntp1.tjnii.com",
-   		    "ntp2.tjnii.com", ]
 
    package { 'ntp':
       ensure => installed,

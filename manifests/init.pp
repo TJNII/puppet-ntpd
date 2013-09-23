@@ -2,7 +2,8 @@ class ntp (
   $ntp_servers = [ "0.pool.ntp.org",
    		   "1.pool.ntp.org",
                    "2.pool.ntp.org",
-                   "3.pool.ntp.org", ]
+                   "3.pool.ntp.org", ],
+  $open_firewall = false,
   ) {
    case $operatingsystem {
       centos, redhat: { 
@@ -30,4 +31,16 @@ class ntp (
       require => Package['ntp'],
       content  => template("ntp/ntp.conf.erb"),
    }
+
+   if $open_firewall == true {
+     include firewall-config::base
+     
+     firewall { '100 allow NTP':
+       state => ['NEW'],
+       dport => '123',
+       proto => 'udp',
+       action => accept,
+     }
+   }
+                           
 }

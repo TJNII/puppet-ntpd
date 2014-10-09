@@ -4,6 +4,9 @@
 -%>
 # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
 
+# Do not panic if the clock is badly off
+tinker panic 0
+
 driftfile /var/lib/ntp/ntp.drift
 
 # Enable this if you want statistics to be logged.
